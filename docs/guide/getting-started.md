@@ -80,9 +80,6 @@ export default function DashboardPage() {
 }
 ```
 
-You only add custom server or client entries when a page needs to take over the
-default SSR or hydration behavior.
-
 ## Add Template Slots
 
 Your Vite template needs the Vitify slots.
@@ -137,42 +134,7 @@ Use `data` for the things your Fastify route already knows: viewer state,
 permissions, loaded records, feature flags, or anything else that belongs to the
 request.
 
-## Customize Entries
-
-Most pages should not need entry files. Use them only when a page needs direct
-control over SSR output, hydration, status codes, headers, or a non-standard
-client boot process.
-
-```text
-apps/web/src/pages/dashboard/
-  App.tsx
-  entry-server.tsx
-  entry-client.tsx
-```
-
-```ts
-reply.vitify.render({
-  url: request.url,
-  pagePath: "apps/web/src/pages/dashboard",
-  serverEntry: "apps/web/src/pages/dashboard/entry-server.tsx",
-  clientEntry: "apps/web/src/pages/dashboard/entry-client.tsx",
-});
-```
-
-## Customize Paths
-
-Most apps should only need `webRoot`. Set explicit paths when your build layout
-is different.
-
-```ts
-await app.register(vitifyReact, {
-  root: process.cwd(),
-  webRoot: "apps/web",
-  templatePath: "apps/web/index.html",
-  clientOutDir: "apps/web/dist/client",
-  isProduction: process.env.NODE_ENV === "production",
-});
-```
+## Next Steps
 
 Read the [Fastify Plugin](/guide/fastify-plugin) guide for every option, or the
 [Core And React](/guide/core-and-react) guide for the adapter split. The

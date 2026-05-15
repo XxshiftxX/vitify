@@ -54,6 +54,21 @@ development hydration script. The default follows `process.env.NODE_ENV`.
 Read [Core And React](/guide/core-and-react) for how the package root and
 `vitify/react` split responsibilities.
 
+## Custom Paths
+
+Most apps should only need `webRoot`. Set explicit paths when your build layout
+is different.
+
+```ts
+await app.register(vitifyReact, {
+  root: process.cwd(),
+  webRoot: "apps/web",
+  templatePath: "apps/web/index.html",
+  clientOutDir: "apps/web/dist/client",
+  isProduction: process.env.NODE_ENV === "production",
+});
+```
+
 ## Reply Helper
 
 Use `reply.vitify.render()` when a route should directly send the rendered HTML
