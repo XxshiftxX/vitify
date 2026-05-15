@@ -29,3 +29,9 @@ export {
   DEFAULT_TEMPLATE_SLOTS,
   applyTemplateSlots,
 } from "./renderer/template.js";
+export type {
+  VitifyInstance,
+  VitifyPluginOptions,
+  VitifyReply,
+} from "./plugin/fastify.js";
+export { vitify } from "./plugin/fastify.js";
