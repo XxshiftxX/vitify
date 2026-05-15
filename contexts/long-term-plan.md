@@ -357,8 +357,11 @@ vitify/
   package.json
   README.md
   docs/
+    index.md
+    api/
+    guide/
+  contexts/
     long-term-plan.md
-    api.md
     migration-zennbot-fastify.md
     monorepo.md
   src/

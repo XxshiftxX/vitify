@@ -26,4 +26,5 @@ Express 호환 계층 없이 Fastify로 마이그레이션한다.
 통째로 옮기는 방식으로 시작하지 않는다. 먼저 Fastify plugin API와 패키지 경계를
 정하고, 그 다음 zennbot을 Fastify 기반 소비자로 옮긴다.
 
-장기 계획은 [docs/long-term-plan.md](docs/long-term-plan.md)에 정리했다.
+내부 개발 컨텍스트와 장기 계획은
+[contexts/long-term-plan.md](contexts/long-term-plan.md)에 정리했다.
