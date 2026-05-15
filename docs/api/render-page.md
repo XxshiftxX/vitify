@@ -1,9 +1,9 @@
 # renderPage
 
-`renderPage` is the lower-level renderer used by the Fastify plugin. Most
-applications should start with the framework plugin, which can render a page
-component directly. Use `renderPage` when you need custom server or client
-entries.
+`renderPage` is the lower-level renderer used by the core Fastify plugin and
+framework adapters. React applications should start with `vitify/react`, which
+can render a page component directly. Use `renderPage` when you need custom
+server or client entries, or when you are building another adapter.
 
 ```ts
 import { renderPage } from "vitify";

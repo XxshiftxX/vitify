@@ -25,3 +25,6 @@ experience first: route from Fastify, keep pages as components, and reach for
 lower-level entries only when a page needs custom control.
 
 Start with the [getting started guide](/guide/getting-started).
+
+Read [Core And React](/guide/core-and-react) for the package split between the
+framework-agnostic core and the React adapter.

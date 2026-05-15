@@ -20,6 +20,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Getting Started", link: "/guide/getting-started" },
+          { text: "Core And React", link: "/guide/core-and-react" },
           { text: "Fastify Plugin", link: "/guide/fastify-plugin" },
           { text: "Vite SSR Shape", link: "/guide/vite-ssr-shape" },
         ],

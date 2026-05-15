@@ -1,8 +1,9 @@
 # Fastify Plugin
 
-Vitify plugins decorate the Fastify instance and reply object. Most React apps
-should use the React plugin so page directories can stay as `App.tsx`
-components.
+Vitify plugins decorate the Fastify instance and reply object.
+
+Most React apps should use the React adapter so page directories can stay as
+`App.tsx` components.
 
 ```ts
 import { vitifyReact } from "vitify/react";
@@ -12,8 +13,9 @@ await app.register(vitifyReact, {
 });
 ```
 
-The lower-level `vitify` plugin from the package root is available when you want
-to provide custom server and client entries yourself.
+The lower-level `vitify` plugin from the package root is the core Fastify plugin.
+Use it when you want to provide custom server and client entries yourself, or
+when you are building a framework adapter.
 
 ## Options
 
@@ -48,6 +50,9 @@ default is `index.html` inside `webRoot`.
 development hydration script. The default follows `process.env.NODE_ENV`.
 
 `decorateName` changes the Fastify decoration name. The default is `vitify`.
+
+Read [Core And React](/guide/core-and-react) for how the package root and
+`vitify/react` split responsibilities.
 
 ## Reply Helper
 

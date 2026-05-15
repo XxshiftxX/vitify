@@ -31,7 +31,7 @@ app.get("/dashboard", async (request, reply) => {
 
 ## Page Components
 
-With the React plugin, each page can be a single `App.tsx` component.
+With `vitify/react`, each page can be a single `App.tsx` component.
 
 ```tsx
 type DashboardPageProps = {
@@ -62,6 +62,9 @@ reply.vitify.render({
 Custom entries are an escape hatch, not the default page shape. Use them when a
 page needs direct control over SSR output, hydration, status codes, headers, or a
 non-standard client boot process.
+
+Custom entries belong to the lower-level core path. React pages should start
+with `App.tsx` and add entries only when the adapter defaults are not enough.
 
 The server entry exports `render`. It may return a string or a render result.
 

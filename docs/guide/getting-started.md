@@ -33,6 +33,9 @@ await app.register(vitifyReact, {
 });
 ```
 
+`vitify/react` is the React adapter. The package root remains the lower-level
+core for custom server and client entries.
+
 By convention, Vitify can use:
 
 - `apps/web/index.html` as the Vite template
@@ -172,4 +175,6 @@ await app.register(vitifyReact, {
 ```
 
 Read the [Fastify Plugin](/guide/fastify-plugin) guide for every option, or the
-[Vite SSR Shape](/guide/vite-ssr-shape) guide for the expected page structure.
+[Core And React](/guide/core-and-react) guide for the adapter split. The
+[Vite SSR Shape](/guide/vite-ssr-shape) guide covers the expected page
+structure.
