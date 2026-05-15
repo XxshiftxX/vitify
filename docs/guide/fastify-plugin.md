@@ -26,6 +26,8 @@ interface VitifyPluginOptions {
   clientOutDir?: string;
   templatePath?: string;
   isProduction?: boolean;
+  rootSelector?: string;
+  template?: TemplateInsertionOptions;
   decorateName?: string;
   templateSlots?: Partial<TemplateSlots>;
   manifest?: ViteManifest;
@@ -43,16 +45,23 @@ components.
 `.vite/manifest.json` from this directory. The default is `dist/client` inside
 `webRoot`.
 
-`templatePath` points to the HTML file that contains the Vitify slots. The
-default is `index.html` inside `webRoot`.
+`templatePath` points to the HTML file used as the response shell. The default
+is `index.html` inside `webRoot`.
 
 `isProduction` controls whether Vitify reads the Vite manifest or emits a
 development hydration script. The default follows `process.env.NODE_ENV`.
 
+`rootSelector` changes where `vitify/react` mounts the rendered page. The
+default is `#root`.
+
+`template` controls where Vitify inserts page HTML, head tags, SSR data, and the
+hydration script. Most apps should use the defaults.
+
 `decorateName` changes the Fastify decoration name. The default is `vitify`.
 
 Read [Core And React](/guide/core-and-react) for how the package root and
-`vitify/react` split responsibilities.
+`vitify/react` split responsibilities. Read [Templates](/guide/templates) for
+template customization.
 
 ## Custom Paths
 

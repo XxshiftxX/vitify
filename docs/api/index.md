@@ -36,5 +36,5 @@ entries, or build another framework adapter.
 - `vitifyReact`: Fastify plugin for React page components.
 
 The React adapter builds on the core renderer but owns the React-specific
-defaults for `App.tsx`, server rendering, prop passing, hydration, and client
-entry generation.
+defaults for `App.tsx`, server rendering, prop passing, `#root` template
+mounting, hydration, and client entry generation.

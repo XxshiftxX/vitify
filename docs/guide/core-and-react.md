@@ -26,7 +26,7 @@ The core should not know about React. It handles the shared SSR mechanics:
 
 - resolving project paths
 - loading the HTML template
-- applying template slots
+- applying template insertion rules
 - serializing SSR data
 - reading the Vite manifest
 - rendering explicit server and client entries
@@ -37,6 +37,7 @@ The React adapter handles React-specific defaults:
 - rendering the component on the server
 - passing route `data` as component props
 - hydrating the same component in the browser
+- using `#root` as the default template mount point
 - generating or resolving the client entry needed by Vite
 
 This keeps the default React workflow small without turning the core package into
@@ -101,3 +102,6 @@ reply.vitify.render({
 
 That escape hatch is intentionally lower level. The everyday React path should
 stay focused on routes and page components.
+
+Read [Templates](/guide/templates) for how the React adapter and core renderer
+handle HTML insertion.

@@ -80,23 +80,22 @@ export default function DashboardPage() {
 }
 ```
 
-## Add Template Slots
+## Add A Root Element
 
-Your Vite template needs the Vitify slots.
+Your Vite template only needs a root element for the React app.
 
 ```html
 <!doctype html>
 <html>
-  <head>
-    <!--app-head-->
-    <!--app-data-->
-  </head>
+  <head></head>
   <body>
-    <div id="root"><!--app-html--></div>
-    <!--app-entry-client-->
+    <div id="root"></div>
   </body>
 </html>
 ```
+
+The React adapter inserts SSR HTML into `#root`, adds page head tags before
+`</head>`, and adds data and hydration scripts before `</body>`.
 
 That is the full loop: Fastify receives the request, chooses the page, Vitify
 renders the component through Vite SSR conventions, and the browser hydrates the
@@ -138,5 +137,4 @@ request.
 
 Read the [Fastify Plugin](/guide/fastify-plugin) guide for every option, or the
 [Core And React](/guide/core-and-react) guide for the adapter split. The
-[Vite SSR Shape](/guide/vite-ssr-shape) guide covers the expected page
-structure.
+[Templates](/guide/templates) guide covers template customization.

@@ -89,16 +89,14 @@ reply.vitify.render({
 });
 ```
 
-## Template Slots
+## Template Shape
 
-Vitify replaces four slots in the HTML template.
+React pages only need a root element in the HTML template.
 
 ```html
-<!--app-html-->
-<!--app-head-->
-<!--app-data-->
-<!--app-entry-client-->
+<div id="root"></div>
 ```
 
-You can override slot strings through `templateSlots` if your existing template
-already uses different markers.
+The React adapter inserts SSR HTML, head tags, SSR data, and hydration scripts
+around that root element. Use [Templates](/guide/templates) when your app needs a
+different root selector or lower-level slot control.

@@ -35,6 +35,8 @@ interface RendererContext {
   clientOutDir: string;
   templatePath: string;
   isProduction: boolean;
+  rootSelector?: string;
+  template?: TemplateInsertionOptions;
   templateSlots?: Partial<TemplateSlots>;
   manifest?: ViteManifest;
   viteDevServer?: ViteDevServerForRender;

@@ -14,6 +14,7 @@ page components.
 - Rendering a page component on the server.
 - Rendering page HTML, head tags, status, and headers.
 - Injecting SSR data into the template.
+- Using `#root` as the default React mount point.
 - Loading Vite manifest entries in production.
 - Adding hydration and CSS tags to the response.
 - Exposing a Fastify plugin and lower-level renderer.
