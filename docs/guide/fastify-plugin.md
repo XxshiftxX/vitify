@@ -1,28 +1,29 @@
 # Fastify Plugin
 
-The `vitify` plugin decorates the Fastify instance and reply object.
+Vitify plugins decorate the Fastify instance and reply object. Most React apps
+should use the React plugin so page directories can stay as `App.tsx`
+components.
 
 ```ts
-import { vitify } from "vitify";
+import { vitifyReact } from "vitify/react";
 
-await app.register(vitify, {
-  root: process.cwd(),
+await app.register(vitifyReact, {
   webRoot: "apps/web",
-  clientOutDir: "apps/web/dist/client",
-  templatePath: "apps/web/index.html",
-  isProduction: process.env.NODE_ENV === "production",
 });
 ```
+
+The lower-level `vitify` plugin from the package root is available when you want
+to provide custom server and client entries yourself.
 
 ## Options
 
 ```ts
 interface VitifyPluginOptions {
-  root: string;
   webRoot: string;
-  clientOutDir: string;
-  templatePath: string;
-  isProduction: boolean;
+  root?: string;
+  clientOutDir?: string;
+  templatePath?: string;
+  isProduction?: boolean;
   decorateName?: string;
   templateSlots?: Partial<TemplateSlots>;
   manifest?: ViteManifest;
@@ -30,17 +31,21 @@ interface VitifyPluginOptions {
 }
 ```
 
-`root` is the base directory used to resolve relative paths.
+`root` is the base directory used to resolve relative paths. The default is
+`process.cwd()`.
 
-`webRoot` is the Vite project root that contains the template and page entries.
+`webRoot` is the Vite project root that contains the template and page
+components.
 
 `clientOutDir` points to the Vite client build output. In production Vitify reads
-`.vite/manifest.json` from this directory.
+`.vite/manifest.json` from this directory. The default is `dist/client` inside
+`webRoot`.
 
-`templatePath` points to the HTML file that contains the Vitify slots.
+`templatePath` points to the HTML file that contains the Vitify slots. The
+default is `index.html` inside `webRoot`.
 
-`isProduction` controls whether Vitify reads the Vite manifest or emits a direct
-development entry script.
+`isProduction` controls whether Vitify reads the Vite manifest or emits a
+development hydration script. The default follows `process.env.NODE_ENV`.
 
 `decorateName` changes the Fastify decoration name. The default is `vitify`.
 

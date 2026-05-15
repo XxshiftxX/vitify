@@ -1,7 +1,7 @@
 # Vite SSR Shape
 
 Vitify is designed for apps where Fastify owns the server and Vite owns the web
-entry files.
+page components.
 
 ```text
 repo/
@@ -14,9 +14,7 @@ repo/
       vite.config.ts
       src/pages/
         dashboard/
-          app.tsx
-          entry-client.tsx
-          entry-server.tsx
+          App.tsx
 ```
 
 The Fastify app registers API routes and chooses which URL should render which
@@ -31,9 +29,39 @@ app.get("/dashboard", async (request, reply) => {
 });
 ```
 
-## Page Entries
+## Page Components
 
-Each page has a server entry used for SSR and a client entry used for hydration.
+With the React plugin, each page can be a single `App.tsx` component.
+
+```tsx
+type DashboardPageProps = {
+  viewer?: {
+    id: string;
+  };
+};
+
+export default function DashboardPage({ viewer }: DashboardPageProps) {
+  return <main>{viewer ? `Hello ${viewer.id}` : "Dashboard"}</main>;
+}
+```
+
+Route `data` is passed to the component as props.
+
+```ts
+reply.vitify.render({
+  url: request.url,
+  pagePath: "apps/web/src/pages/dashboard",
+  data: {
+    viewer: request.user,
+  },
+});
+```
+
+## Custom Entries
+
+Custom entries are an escape hatch, not the default page shape. Use them when a
+page needs direct control over SSR output, hydration, status codes, headers, or a
+non-standard client boot process.
 
 The server entry exports `render`. It may return a string or a render result.
 
@@ -46,13 +74,14 @@ type ServerEntryResult = {
 };
 ```
 
-The client entry path defaults to `entry-client.tsx` inside the page directory.
-Override it when a page uses a different convention.
+The client entry hydrates the page in the browser. Pass explicit entry paths
+when a page uses custom entries.
 
 ```ts
 reply.vitify.render({
   url: request.url,
   pagePath: "apps/web/src/pages/dashboard",
+  serverEntry: "apps/web/src/pages/dashboard/entry-server.tsx",
   clientEntry: "apps/web/src/client/dashboard.tsx",
 });
 ```

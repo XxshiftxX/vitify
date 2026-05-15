@@ -5,35 +5,30 @@ Fastify stays in charge of startup, middleware, auth, logging, API routes, and
 deployment. Vitify only handles the repeated Vite SSR plumbing for a page:
 
 - load the Vite HTML template
-- run the page server entry
+- render the page component on the server
 - inject HTML, head tags, and SSR data
-- point the browser at the matching client entry
+- hydrate the same component in the browser
 
 ## Install
 
-Install Vitify with Fastify and the Vite runtime your UI uses.
+Install Vitify with Fastify, Vite, and React.
 
 ```sh
-npm install vitify fastify vite
-```
-
-For the React example below, install React too.
-
-```sh
-npm install react react-dom
+npm install vitify fastify vite react react-dom
 ```
 
 ## Register Vitify
 
-Register the plugin once from your Fastify app. Point `webRoot` at the Vite app.
+Register the React plugin once from your Fastify app. Point `webRoot` at the
+Vite app.
 
 ```ts
 import Fastify from "fastify";
-import { vitify } from "vitify";
+import { vitifyReact } from "vitify/react";
 
 const app = Fastify({ logger: true });
 
-await app.register(vitify, {
+await app.register(vitifyReact, {
   webRoot: "apps/web",
 });
 ```
@@ -48,7 +43,7 @@ Use the full plugin options only when your project does not follow those paths.
 
 ## Render A Page
 
-Fastify owns the route. The route chooses which page directory should render.
+Fastify owns the route. The route chooses which page component should render.
 
 ```ts
 app.get("/dashboard", async (request, reply) => {
@@ -62,39 +57,28 @@ app.get("/dashboard", async (request, reply) => {
 Vitify does not add a file-system router. A URL renders a page only when your
 Fastify route asks it to.
 
-## Add Page Entries
+## Add A Page
 
-Each page directory has one server entry for SSR and one client entry for
-hydration.
+Each page directory can start with a single `App.tsx`.
 
 ```text
 apps/web/
   index.html
   src/pages/dashboard/
     App.tsx
-    entry-server.tsx
-    entry-client.tsx
 ```
 
-The server entry renders HTML.
+Export the page component. Vitify renders it on the server and hydrates it in
+the browser.
 
 ```tsx
-import { renderToString } from "react-dom/server";
-import { App } from "./App";
-
-export function render() {
-  return renderToString(<App />);
+export default function DashboardPage() {
+  return <main>Dashboard</main>;
 }
 ```
 
-The client entry hydrates the same app in the browser.
-
-```tsx
-import { hydrateRoot } from "react-dom/client";
-import { App } from "./App";
-
-hydrateRoot(document.getElementById("root")!, <App />);
-```
+You only add custom server or client entries when a page needs to take over the
+default SSR or hydration behavior.
 
 ## Add Template Slots
 
@@ -115,12 +99,12 @@ Your Vite template needs the Vitify slots.
 ```
 
 That is the full loop: Fastify receives the request, chooses the page, Vitify
-renders it through Vite SSR conventions, and the browser hydrates the matching
-client entry.
+renders the component through Vite SSR conventions, and the browser hydrates the
+same component.
 
 ## Pass Data When Needed
 
-Routes can pass request-specific data to the page server entry.
+Routes can pass request-specific data to the page component.
 
 ```ts
 app.get("/dashboard", async (request, reply) => {
@@ -135,14 +119,14 @@ app.get("/dashboard", async (request, reply) => {
 ```
 
 ```tsx
-import { renderToString } from "react-dom/server";
-import { App } from "./App";
-
-export function render({ data }) {
-  return {
-    html: renderToString(<App viewer={data.viewer} />),
-    head: "<title>Dashboard</title>",
+type DashboardPageProps = {
+  viewer: {
+    id: string;
   };
+};
+
+export default function DashboardPage({ viewer }: DashboardPageProps) {
+  return <main>Signed in as {viewer.id}</main>;
 }
 ```
 
@@ -150,13 +134,35 @@ Use `data` for the things your Fastify route already knows: viewer state,
 permissions, loaded records, feature flags, or anything else that belongs to the
 request.
 
+## Customize Entries
+
+Most pages should not need entry files. Use them only when a page needs direct
+control over SSR output, hydration, status codes, headers, or a non-standard
+client boot process.
+
+```text
+apps/web/src/pages/dashboard/
+  App.tsx
+  entry-server.tsx
+  entry-client.tsx
+```
+
+```ts
+reply.vitify.render({
+  url: request.url,
+  pagePath: "apps/web/src/pages/dashboard",
+  serverEntry: "apps/web/src/pages/dashboard/entry-server.tsx",
+  clientEntry: "apps/web/src/pages/dashboard/entry-client.tsx",
+});
+```
+
 ## Customize Paths
 
 Most apps should only need `webRoot`. Set explicit paths when your build layout
 is different.
 
 ```ts
-await app.register(vitify, {
+await app.register(vitifyReact, {
   root: process.cwd(),
   webRoot: "apps/web",
   templatePath: "apps/web/index.html",

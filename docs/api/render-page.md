@@ -1,6 +1,9 @@
 # renderPage
 
-`renderPage` is the lower-level renderer used by the Fastify plugin.
+`renderPage` is the lower-level renderer used by the Fastify plugin. Most
+applications should start with the framework plugin, which can render a page
+component directly. Use `renderPage` when you need custom server or client
+entries.
 
 ```ts
 import { renderPage } from "vitify";
@@ -50,11 +53,11 @@ interface RenderPageOptions {
 }
 ```
 
-`pagePath` points to the page directory. By default Vitify loads
-`entry-server.tsx` and `entry-client.tsx` from that directory.
+`pagePath` points to the page directory. At this level, Vitify can load explicit
+server and client entries for advanced pages.
 
-Use `clientEntry` or `serverEntry` when a page does not follow the default file
-names.
+Use `clientEntry` or `serverEntry` when a page needs a custom SSR or hydration
+entry.
 
 ## Result
 

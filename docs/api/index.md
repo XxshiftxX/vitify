@@ -12,9 +12,9 @@ import {
 } from "vitify";
 ```
 
-Most applications should start with the Fastify plugin. Use `renderPage` when
-you need to integrate Vitify into a custom server adapter or test rendering
-without Fastify.
+Most applications should start with the framework plugin. Use `renderPage` when
+you need to integrate Vitify into a custom server adapter, test rendering without
+Fastify, or take direct control of custom page entries.
 
 ## Main Exports
 
@@ -22,6 +22,6 @@ without Fastify.
 - `renderPage`: Lower-level HTML renderer.
 - `DEFAULT_TEMPLATE_SLOTS`: Default HTML slot markers.
 - `applyTemplateSlots`: Template replacement helper.
-- `loadServerEntry`: Loads a page server entry.
+- `loadServerEntry`: Loads a custom page server entry.
 - `collectCssFiles`: Collects recursive CSS files from a Vite manifest entry.
 - `serializeSsrDataScript`: Serializes SSR data for HTML injection.
